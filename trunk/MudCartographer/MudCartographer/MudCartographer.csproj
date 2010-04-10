@@ -48,22 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FlickerFreePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FlickerFreePanel.Designer.cs">
-      <DependentUpon>FlickerFreePanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Graphs.cs">
+    <Compile Include="Cartographer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graphs.Designer.cs">
-      <DependentUpon>Graphs.cs</DependentUpon>
+    <Compile Include="Cartographer.Designer.cs">
+      <DependentUpon>Cartographer.cs</DependentUpon>
     </Compile>
+    <Compile Include="DBGraphics.cs" />
+    <Compile Include="DrawMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Graphs.resx">
-      <DependentUpon>Graphs.cs</DependentUpon>
+    <EmbeddedResource Include="Cartographer.resx">
+      <DependentUpon>Cartographer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

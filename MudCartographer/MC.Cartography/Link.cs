@@ -16,9 +16,9 @@ namespace MudCartographer
             this.endRoom = endRoom;
         }
 
-        public bool equals(Object o)
+        public override bool equals(Object o)
         {
-            return o.GetType().Equals(Link) && ((Link)o).startRoom.Equals(startRoom) && ((Link)o).endRoom.Equals(endRoom);
+            return o != null && o.GetType().Equals(GetType()) && ((Link)o).startRoom.Equals(startRoom) && ((Link)o).endRoom.Equals(endRoom);
         }
         
     }

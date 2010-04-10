@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudCartographer", "MudCartographer\MudCartographer.csproj", "{6F9F7653-D8B1-48B6-A990-E9F466D2F0FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC.Tests", "MC.Tests\MC.Tests.csproj", "{B0EA6970-0C71-48DE-B594-C63D49AAFBC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC.Cartography", "MC.Cartography\MC.Cartography.csproj", "{6183DF2C-AA8E-4E2B-9BBC-07EFF50CDA96}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F9F7653-D8B1-48B6-A990-E9F466D2F0FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F9F7653-D8B1-48B6-A990-E9F466D2F0FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F9F7653-D8B1-48B6-A990-E9F466D2F0FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F9F7653-D8B1-48B6-A990-E9F466D2F0FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0EA6970-0C71-48DE-B594-C63D49AAFBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0EA6970-0C71-48DE-B594-C63D49AAFBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0EA6970-0C71-48DE-B594-C63D49AAFBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0EA6970-0C71-48DE-B594-C63D49AAFBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6183DF2C-AA8E-4E2B-9BBC-07EFF50CDA96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6183DF2C-AA8E-4E2B-9BBC-07EFF50CDA96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6183DF2C-AA8E-4E2B-9BBC-07EFF50CDA96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6183DF2C-AA8E-4E2B-9BBC-07EFF50CDA96}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

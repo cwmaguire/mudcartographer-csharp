@@ -1,0 +1,5 @@
+C:\Users\lulu\Documents\Downloads\MudCartographer\MudCartographer\MC.Cartography\bin\Debug\MC.Cartography.dll
+C:\Users\lulu\Documents\Downloads\MudCartographer\MudCartographer\MC.Cartography\bin\Debug\MC.Cartography.pdb
+C:\Users\lulu\Documents\Downloads\MudCartographer\MudCartographer\MC.Cartography\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\lulu\Documents\Downloads\MudCartographer\MudCartographer\MC.Cartography\obj\Debug\MC.Cartography.dll
+C:\Users\lulu\Documents\Downloads\MudCartographer\MudCartographer\MC.Cartography\obj\Debug\MC.Cartography.pdb

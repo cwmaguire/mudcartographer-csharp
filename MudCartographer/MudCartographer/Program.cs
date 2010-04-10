@@ -15,7 +15,7 @@ namespace MudCartographer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Graphs());
+            Application.Run(new Cartographer());
         }
     }
 }

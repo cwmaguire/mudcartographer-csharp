@@ -18,13 +18,15 @@ namespace MudCartographer
 
         public override bool Equals(Object obj)
         {
-            // Check for null values and compare run-time types.
             if (obj == null || GetType() != obj.GetType())
                 return false;
             
             Link link = (Link)obj;
-
             return link.startRoom.Equals(startRoom) && link.endRoom.Equals(endRoom);
+        }        
+        public bool Contains(Room roomContained)
+        {
+            return startRoom == roomContained || endRoom == roomContained;
         }
         
     }

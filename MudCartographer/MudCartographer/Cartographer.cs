@@ -6,27 +6,65 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace MudCartographer
 {
     public partial class Cartographer : Form
     {
-        private DBGraphics memGraphics;
-        private DrawMap drawMap;
-        Map m;
-        Room firstRoom;
+        #region Actions & ToolStrip
+        enum Action { Select, Draw, Delete}
+        Action _Mode;
+        Action Mode
+        {
+            get { return _Mode; }
+            set
+            {
+                _Mode = value;
+                //Exclusive actions
+                foreach (ToolStripButton B in toolStripEdition.Items) B.Checked = false;
+                switch (_Mode)
+                {
+                    case Action.Select:
+                    {
+                        toolStripSelection.Checked = true;
+                        break;
+                    }
+                    case Action.Draw:
+                    {
+                        toolStripCreate.Checked = true;
+                        break;
+                    }
+
+                    case Action.Delete:
+                    {
+                        toolStripDeleteNode.Checked = true;
+                        break;
+                    }
+                }
+            }
+        }
+        #endregion
+       
+        DBGraphics memGraphics;
+        DrawMap drawMap;
+        Map mapToDraw;
+        bool isDraggingRoom;
 
         public Cartographer()
         {
             memGraphics = new DBGraphics();
-            m = new Map();
-            drawMap = new DrawMap(m);
-            InitializeComponent();
+            mapToDraw = new Map();
+            drawMap = new DrawMap(mapToDraw);
+            isDraggingRoom = false;
+
+            InitializeComponent();            
         }
 
         private void Cartographer_Load(object sender, EventArgs e)
         {
-            memGraphics.CreateDoubleBuffer(this.CreateGraphics(), this.ClientRectangle.Width, this.ClientRectangle.Height);
+            Mode = Action.Draw;
+            memGraphics.CreateDoubleBuffer(this.CreateGraphics(), this.ClientRectangle.Width, this.ClientRectangle.Height);            
         }
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
@@ -42,41 +80,96 @@ namespace MudCartographer
         {
             if (memGraphics.CanDoubleBuffer())
             {
-                // Fill in Background (for effieciency only the area that has been clipped)
                 memGraphics.g.FillRectangle(new SolidBrush(SystemColors.Window), e.ClipRectangle.X, e.ClipRectangle.Y, e.ClipRectangle.Width, e.ClipRectangle.Height);
-
-                // Draw the object
                 drawMap.Draw(memGraphics.g);
-
-                // Render to the form
                 memGraphics.Render(e.Graphics);
             }
+        }
 
+        private void ToggleButtonsSelectionEdition()
+        {
+            if (Mode == Action.Select)
+            {
+                Mode = Action.Draw;
+            }
+            else
+            {
+                Mode = Action.Select;
+            }
         }
 
         private void Cartographer_MouseDown(object sender, MouseEventArgs e)
         {
-            if (firstRoom == null)
+            if (e.Button == MouseButtons.Right)
             {
-                firstRoom = new Room(new Point3D(e.X, e.Y, 0));
-                m.addRoom(firstRoom);
+                ToggleButtonsSelectionEdition();
+                return;
             }
-            else
+
+            Point3D pointOfRefence = new Point3D(e.X, e.Y, 0);
+            switch (Mode)
             {
-                Room newRoom = new Room(new Point3D(e.X, e.Y, 0));
-                m.addRoom(newRoom);
-                Link newLink = new Link(firstRoom, newRoom);
-                m.addLink(newLink);
+                case Action.Select:
+                    {
+                        mapToDraw.SelectRoomNearPoint(pointOfRefence);
+                        break;
+                    }
+                case Action.Delete:
+                    {
+                        Room roomToDelete = mapToDraw.GetClosestRoomToPoint(pointOfRefence);
+                        if (roomToDelete != null)
+                            mapToDraw.DeleteRoom(roomToDelete);
+                        break;
+                    }
+                case Action.Draw:
+                    {
+                        if (mapToDraw.ARoomIsNearPoint(pointOfRefence))
+                        {
+                            Room nextRoom = mapToDraw.GetClosestRoomToPoint(pointOfRefence);
+                            if (mapToDraw.GetSelectedRooms().Count > 0)
+                            {
+                                Room lastRoomSelected = (Room)mapToDraw.GetSelectedRooms()[0];
+                                mapToDraw.AddLink(lastRoomSelected, nextRoom);
+                            }                                                           
+                            mapToDraw.SelectRoomNearPoint(pointOfRefence);
+                        }
+                        else
+                        {
+                            Room newRoom = new Room(pointOfRefence);
+                            mapToDraw.AddRoom(newRoom);
+
+                            if (mapToDraw.GetSelectedRooms().Count == 0)
+                                mapToDraw.SelectASingleRoom(newRoom);
+                            else mapToDraw.LinkRoomToSelectedRooms(newRoom);
+                        }
+                        break;
+                    }
+
             }
             Invalidate();
         }
 
         private void toolStripClear_Click(object sender, EventArgs e)
         {
-            m.Clear();
-            firstRoom = null;
+            mapToDraw.DeleteRoomsLinksAndSelection();
             Invalidate();
         }
 
-    }
+        private void toolStripSelection_Click(object sender, EventArgs e)
+        {
+            Mode = Action.Select;
+        }
+
+        private void toolStripCreate_Click(object sender, EventArgs e)
+        {
+            Mode = Action.Draw;
+        }
+
+
+
+        private void toolStripDeleteNote_Click(object sender, EventArgs e)
+        {
+            Mode = Action.Delete;
+        }
+   }
 }

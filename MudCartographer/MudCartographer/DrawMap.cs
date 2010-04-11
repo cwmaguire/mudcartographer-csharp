@@ -1,34 +1,43 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Collections;
+using MC.Cartography;
 
 namespace MudCartographer
 {
     public class DrawMap
     {
-        int radius = 7;
-        private Map map;
-        public DrawMap(Map m)
+        private Map mapToDraw;
+
+        public DrawMap(Map mapToDraw)
         {
-            this.map = m;
+            this.mapToDraw = mapToDraw;            
         }
-        public void Draw(Graphics g)
+        public void Draw(Graphics graphics)
         {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.PixelOffsetMode = PixelOffsetMode.None;
-            foreach (Link L in map.Links) DrawLink(g, L);
-            foreach (Room R in map.Rooms) DrawRoom(g, R);   
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.PixelOffsetMode = PixelOffsetMode.None;
+            foreach (Link linkToDraw in mapToDraw.Links) DrawLink(graphics, linkToDraw);
+            foreach (Room roomToDraw in mapToDraw.Rooms) DrawRoom(graphics, roomToDraw);
+            DrawSelectedRooms(graphics);
         }
-        private void DrawRoom(Graphics g, Room R)
+        private void DrawRoom(Graphics graphics, Room roomToDraw)
         {
-            g.FillEllipse(Brushes.White, (int)R.X - radius, (int)R.Y - radius, 2 * radius, 2 * radius);
-            g.DrawEllipse(new Pen(Color.Black, 1), (int)R.X - radius, (int)R.Y - radius, 2 * radius, 2 * radius);
+            graphics.FillEllipse(Brushes.White, (int)roomToDraw.X - Constants.RADIUS, (int)roomToDraw.Y - Constants.RADIUS, 2 * Constants.RADIUS, 2 * Constants.RADIUS);
+            graphics.DrawEllipse(new Pen(Color.Black, Constants.PEN_NORMAL_SIZE), (int)roomToDraw.X - Constants.RADIUS, (int)roomToDraw.Y - Constants.RADIUS, 2 * Constants.RADIUS, 2 * Constants.RADIUS);
+        }
+        private void DrawSelectedRooms(Graphics graphics)
+        {
+            foreach(Room roomToDraw in mapToDraw.GetSelectedRooms())
+                graphics.DrawEllipse(new Pen(Color.Blue, Constants.PEN_BOLD_SIZE), (int)roomToDraw.X - Constants.RADIUS, (int)roomToDraw.Y - Constants.RADIUS, 2 * Constants.RADIUS, 2 * Constants.RADIUS);
         }
 
-        private void DrawLink(Graphics g, Link L)
+        private void DrawLink(Graphics graphics, Link linkToDraw)
         {
-            g.DrawLine(new Pen(Color.Black, 1), (int)L.startRoom.X, (int)L.startRoom.Y, (int)L.endRoom.X, (int)L.endRoom.Y);
+            graphics.DrawLine(new Pen(Color.Black, Constants.PEN_NORMAL_SIZE), (int)linkToDraw.startRoom.X, (int)linkToDraw.startRoom.Y, (int)linkToDraw.endRoom.X, (int)linkToDraw.endRoom.Y);
         }
+
 
 
     }

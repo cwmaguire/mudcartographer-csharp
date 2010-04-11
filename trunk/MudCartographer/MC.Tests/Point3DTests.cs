@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using MudCartographer;
+using MC.Cartography;
 
 namespace MC.Tests
 {
@@ -11,11 +12,12 @@ namespace MC.Tests
     class Point3DTests
     {
         [Test]
-        public void createPoint_constructor_NoReturn()
+        public void CreatePoint()
         {
-            Point3D p = new Point3D(10, 10, 0);
-            bool result = (p[0] == 10 && p[1] == 10 && p[2] == 0);
-            Assert.IsTrue(result, "verify point3D constructor");
+            Point3D testPoint = new Point3D(TestConstants.POINT_1_X, TestConstants.POINT_1_Y, TestConstants.POINT_1_Z);
+            Assert.AreEqual(testPoint[Constants.X_COORD], TestConstants.POINT_1_X);
+            Assert.AreEqual(testPoint[Constants.Y_COORD], TestConstants.POINT_1_Y);
+            Assert.AreEqual(testPoint[Constants.Z_COORD], TestConstants.POINT_1_Z);
         }
     }
 }
